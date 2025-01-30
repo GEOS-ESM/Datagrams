@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 ### Changed
+2025-01-30: Updated handling of raw strings and slight updates in matplotlib syntax for Python 3 compatability
 
 ### Fixed
 
