@@ -155,16 +155,16 @@ comp02 = {
 #==============================================================================
 
 purple01 = mcolors.LinearSegmentedColormap('purple01', purple01)
-plt.register_cmap(cmap=purple01)
+plt.colormaps.register(cmap=purple01)
 
 hot01 = mcolors.LinearSegmentedColormap('hot01', hot01)
-plt.register_cmap(cmap=hot01)
+plt.colormaps.register(cmap=hot01)
 
 green01 = mcolors.LinearSegmentedColormap('green01', green01)
-plt.register_cmap(cmap=green01)
+plt.colormaps.register(cmap=green01)
 
 comp02 = mcolors.LinearSegmentedColormap('comp02', comp02)
-plt.register_cmap(cmap=comp02)
+plt.colormaps.register(cmap=comp02)
 
 #cmap = {
 #    'o3':purple01,
@@ -326,7 +326,10 @@ def plot(ipath, station, lat, lon, fcst, opath):
 
     ## scaling for imagery
     cldtt['data'] = np.absolute(cldtt['data'])                # %
-    precip['data'] = precip['data']*1e4                       # mm
+    # Precipitation is in units of kg m-2 s-1, which is equivalent
+    # to mm s-1. To get the total rainfall in an hour, we need to
+    # multiply by 3600.
+    precip['data'] = precip['data']*3600.0
 
     o3['data'] = o3['data'].transpose()[yi]*1.0e+9            # PPBV
     so2['data'] = so2['data'].transpose()[yi]*1.0e+9          # PPBV

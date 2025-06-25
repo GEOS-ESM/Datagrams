@@ -300,7 +300,7 @@ def writeNC ( stnName, stnLon, stnLat, tyme, f, options,
     described by (lon,lat).
     """
     import time as tme
-    start = tme.clock()
+    start = tme.process_time()
     from netCDF4 import Dataset
 
     nz_ = f.km
@@ -420,7 +420,7 @@ def writeNC ( stnName, stnLon, stnLat, tyme, f, options,
     for v in Vars:
         #var = f.Vars[v.upper()]
         var = f.Vars[v]
-        if var.km == 0:
+        if var.km == 0 or nz_ == 1:
             dim = ('station','time',)
             shp = ( ns_, nt_)
         else:
@@ -436,15 +436,15 @@ def writeNC ( stnName, stnLon, stnLat, tyme, f, options,
             if options.verbose:
                 print("[] Zero-filling <%s>"%var.name)
         else:
-            #print 'Elapsed time (before interp):',(tme.clock()-start)
+            #print 'Elapsed time (before interp):',(tme.process_time()-start)
             this_ = stnSample(f,var,stnLon,stnLat,tyme,options)
-            #print 'Elapsed time (after interp):',(tme.clock()-start)
+            #print 'Elapsed time (after interp):',(tme.process_time()-start)
         this[:] = this_[:]
             
     # Close the file
     # --------------
     nc.close()
-    #print 'Elapsed time:',(tme.clock()-start)
+    #print 'Elapsed time:',(tme.process_time()-start)
 
     if options.verbose:
         print(" <> wrote %s file %s"%(options.format,options.outFile))
