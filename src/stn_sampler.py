@@ -420,7 +420,7 @@ def writeNC ( stnName, stnLon, stnLat, tyme, f, options,
     for v in Vars:
         #var = f.Vars[v.upper()]
         var = f.Vars[v]
-        if var.km == 0 or nz_ == 1:
+        if var.km == 0:
             dim = ('station','time',)
             shp = ( ns_, nt_)
         else:

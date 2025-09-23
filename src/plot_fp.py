@@ -1,5 +1,6 @@
 import os
 import math
+import time
 import numpy as np
 import datetime as dt
 # matplotlib - MPLCONFIGDIR issue
@@ -128,7 +129,8 @@ def do_plots(ipath, stations, fcst, opath):
     return
 
 def plot_wrapper(args):
-    return plot(*args)
+    rc = plot(*args)
+    return 0
 
 def plot(ipath, station, lat, lon, fcst, opath):
     '''main plot driver'''
@@ -212,9 +214,11 @@ def plot(ipath, station, lat, lon, fcst, opath):
     cldhgh['data'] = np.absolute(cldhgh['data'])             # %
     cldmid['data'] = np.absolute(cldmid['data'])             # %
     cldlow['data'] = np.absolute(cldlow['data'])             # %
-    precsno['data'] = precsno['data']*1e4                    # kg m-2 s-1
-    prectot['data'] = prectot['data']*1e4 - precsno['data']  # kg m-2 s-1
-    preccon['data'] = preccon['data']*1e4                    # kg m-2 s-1
+
+    sec = 3 * 3600.0 # number of seconds in 3 hours.
+    precsno['data'] = precsno['data']*sec
+    prectot['data'] = prectot['data']*sec - precsno['data']  # kg m-2 s-1
+    preccon['data'] = preccon['data']*sec                    # kg m-2 s-1
 
     rh['data'] = rh['data'].transpose()[yi]*100              # %
     ocext['data'] = ocext['data'].transpose()[yi]*1e3        # km-1
